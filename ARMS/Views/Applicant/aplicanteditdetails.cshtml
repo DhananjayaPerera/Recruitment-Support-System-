@@ -1,0 +1,114 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid container-fullw bg-white">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h4 style="color: #696565" id="jobTitle">@ViewBag.ApplicantEditDetails.vacancy.job.JobTitle</h4>
+            <hr>
+            <h2 id="JOBApplicationID" style="visibility:hidden">@ViewBag.ApplicantEditDetails.ApplicantId</h2>
+
+            <h2>@ViewBag.ApplicantEditDetails.firstName &nbsp;@ViewBag.ApplicantEditDetails.lastName</h2>
+            <h5 style="margin-left:10px;">&nbsp;Gender:&nbsp;@ViewBag.ApplicantEditDetails.Gender</h5>
+            <h5 style="margin-left:10px;">&nbsp;Age:&nbsp;@ViewBag.Age</h5>
+            <h5 style="margin-left:10px;">&nbsp;City:&nbsp;@ViewBag.ApplicantEditDetails.City</h5>
+
+            @Html.ActionLink("Open CV SoftCopy", "OpenPDF", "Applicant", new { path = "~/UploadCV/" + @ViewBag.ApplicantEditDetails.vacancy.job.JobTitle + "/" + @ViewBag.ApplicantEditDetails.vacancy.VacancyId + "/", fileName = @ViewBag.ApplicantEditDetails.ApplicantId + ".pdf" }, new { target = "_blank" })
+            <hr>
+
+            <div class="row">
+                <div class="col-md-6" style="margin-top: 10px; margin-bottom: 10px;">
+                    <div class="col-md-1">
+
+                    </div>
+                    <div class="col-md-11">
+                        <h5><i class="ti ti-anchor" style="color:blue;"></i>&nbsp;&nbsp;&nbsp;@ViewBag.ApplicantEditDetails.phoneNumber</h5>
+                        <h5 id="emailAddress"><i class="ti ti-email" style="color:blue;"></i>&nbsp;&nbsp;&nbsp;@ViewBag.ApplicantEditDetails.email</h5>
+                        <h5><i class="ti ti-home" style="color:blue;"></i>&nbsp;&nbsp;&nbsp;@ViewBag.ApplicantEditDetails.address</h5>
+                        <h5><i class="ti ti-anchor" style="color:blue;"></i>&nbsp;&nbsp;&nbsp;<b>DOB:&nbsp;</b>@ViewBag.ApplicantEditDetails.DOB.Month/@ViewBag.ApplicantEditDetails.DOB.Day/@ViewBag.ApplicantEditDetails.DOB.Year</h5>
+                        <label class="control-label">
+
+                        </label>
+
+                    </div>
+                </div>
+                <div class="col-md-6" style="margin-top: 10px; margin-bottom: 10px;">
+                    <div class="row">
+
+                        <div class="col-md-5 col-sm-5 col-xs-12">
+                            <h5 class="text-bold margin-top-25 margin-bottom-15"> <b> Interview Date & Time</b></h5>
+                            <div class="form-group">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    <input type='text' class="form-control" id="dateTime" value=@ViewBag.ApplicantEditDetails.InterviewDateTime />
+                                    <span class="input-group-addon" id="dateTime1">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        @*dateTime,period,ApplicationID*@
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <h5 class="text-bold margin-top-25 margin-bottom-15"> <b> Interview Duration</b></h5>
+                            <div class="form-group">
+                                <input type='text' class="form-control" value=@ViewBag.DurationTime />
+                            </div>
+                        </div>
+
+                        @*<div class="col-md-3 col-sm-3 col-xs-12">
+                            <div class="form-group">
+                                <h5 class="text-bold margin-top-25 margin-bottom-15" style="color: #D4D2D2">  Interview Time</h5>
+                                <button type="button" class="pull-left btn btn-primary" id="Allocate">
+                                    Allocate
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </button>
+                            </div>
+                        </div>*@
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <hr>
+
+            <div class="row" id="AllocateInterViewPanel">
+                <div class="col-md-2 col-sm-2"></div>
+                <div class="col-md-8 col-sm-8">
+                    <h4 class="text-bold margin-top-25 margin-bottom-15"> <b> Allocated Interview Panel Members</b></h4>
+
+                    @*<div id="noSystemUsers">
+                        <h4 id="noSystemUsers1" style="color:red;"><b>Sorry there is no available System Users yet...!!!</b></h4>
+                    </div>*@
+
+
+                    @*<div id="toppings">
+                        @foreach (var i in ViewBag.ApplicantEditDetails.AssignInterviewMembers) { 
+                            <div>
+                                 <label>
+                                    <input type="text"  value=@i />
+                                 </label>
+                            </div>
+                        }
+                    </div>*@
+
+                    @*<button type="button" class="col-xs-3 btn btn-primary" id="SaveChanges">
+                        Save
+                        <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+
+                    <label class="control-label">
+                    </label>*@
+
+                </div>
+                <div class="col-md-2 col-sm-2"></div>
+            </div>
+            <hr>
+
+        </div>
+    </div>
+</div>
+

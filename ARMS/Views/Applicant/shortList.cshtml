@@ -1,0 +1,64 @@
+﻿
+@{
+   
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+   
+}
+
+
+<div class="container-fluid container-fullw bg-white">
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-transparent">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <b>All Interview Applicants</b>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <table class="table" id="example1">
+                    <tbody>
+                        @if (User.Identity.Name != "Admin")
+                        {
+                            foreach (var item in ViewBag.AllApplications)
+                            {
+                                if (@item.marks == 0)
+                                {
+                                    <tr style="background-color: #A4F988; ">
+                                        <td>@item.firstName  @item.lastName</td>
+                                        <td>Marks : @item.marks </td>
+                                        <td class="right-side">
+                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                <a href="#" onclick=LoadApplicantDetailsPage(@item.ApplicantId) class="btn btn-transparent btn-xs"><i class="fa fa-angle-right"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr style="background-color: #FFD290; ">
+                                        <td>@item.firstName  @item.lastName</td>
+                                        <td>Marks : @item.marks </td>
+                                        <td class="right-side">
+                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                <a href="#" onclick=LoadApplicantDetailsPage(@item.ApplicantId,@item.firstName,@item.lastName) class="btn btn-transparent btn-xs"><i class="fa fa-pencil"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+</div>
+

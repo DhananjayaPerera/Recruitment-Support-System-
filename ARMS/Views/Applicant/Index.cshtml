@@ -1,0 +1,160 @@
+﻿@{
+    if (User.Identity.Name == "Admin")
+    {
+        Layout = "~/Views/Shared/_SuperAdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+}
+
+<div class="container-fluid container-fullw bg-white">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-transparent">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <b>All Current Vacancies</b>
+                    </div>
+                </div>
+                <div class="panel-body">      
+                    <div class="list-group">
+                        @foreach (var item in ViewBag.VacancyList)
+                        {
+                            <a class="list-group-item" href="#" id='@item.VacancyId'>
+                                @item.job.JobTitle
+                            </a>
+                        }
+                                             
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+       
+        <div class="col-md-8 " id="ApplicantListId">
+            <h5 class="over-title margin-bottom-15"><b>Job Applicants for <span id="jobTitle"></span></b></h5>
+            <div class="col-md-6 ">
+                <table class="table" id="example1">
+                    @*<tbody>
+                        <tr style="background-color: #F2F2F2; ">
+                            <td>Peter Clark</td>
+                            <td class="center">
+                                <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                    <a href="#" class="btn btn-transparent btn-xs"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="background-color: #C7F1D9">
+                            <td>Peter Clark</td>
+                            <td class="center">
+                                <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                    <a href="#" class="btn btn-transparent btn-xs"><i class="fa fa-phone"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>*@
+                </table>
+            </div>
+            <div class="col-md-2 ">
+            </div>               
+        </div>
+        
+       
+        
+       
+        <div class="col-md-8"  id="notApplicantMSG" >
+            <h5 class="over-title margin-bottom-15" style="color:red;"><b>There is no applicant apply for this vacancy yet...</b> </h5>
+        </div>
+       
+</div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+    $(".list-group-item").click(function () {
+        $(".list-group-item").removeClass("active")
+        $(this).addClass("active");
+        var id = $(this).attr('id');
+        LoadApplicantDetails(id);
+    });
+
+    $(document).ready(function (e) {
+        $('#ApplicantListId').hide();
+        $('#notApplicantMSG').hide();
+
+        $('#ApplicantList').toggleClass('active');
+    });
+
+    //----------------- Load Applicant Details -------------------------------------//
+    function LoadApplicantDetails(vacancyId) {
+        var jsonObject = {
+            "VacancyId": vacancyId
+        };
+        $.ajax({
+            url: "/Applicant/LoadApplicantDetails",
+            type: "POST",
+            data: JSON.stringify(jsonObject),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (response) {
+                alert("error");
+            },
+            success: function (response) {
+                if (response.length != 0) {
+                    $('#ApplicantListId').show();
+                    $('#notApplicantMSG').hide();
+
+                    $("#jobTitle").text(response[0].vacancy.job.JobTitle);
+                    //$("#jobTitle").text("ppp")
+                    var dialog = bootbox.dialog({
+                        message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>',
+                        closeButton: false
+                    });
+
+                    setTimeout(function () {
+
+                        $("#example1").empty();
+
+                        for (i in response) {
+                            if (response[i].isAssignedTimeShedule) {
+                                $('#example1').append($('<tr/>').append($('<td/>').append(response[i].firstName + " " + response[i].lastName), $('<td/>').append('<a href="#"  onclick = LoadApplicantEditDetailsPage("' + response[i].ApplicantId + '")  ><i class="fa fa-pencil"></a>')).css('background-color', "#FFD290"));
+                            }
+                            else {
+                                $('#example1').append($('<tr/>').append($('<td/>').append(response[i].firstName + " " + response[i].lastName), $('<td/>').append('<a href="#"  onclick = LoadApplicantDetailsPage("' + response[i].ApplicantId + '")  ><i class="fa fa-phone"></a>')).css('background-color', "#A4F988")); //not assigned timeShedule
+                            }
+                            
+                        }
+                        dialog.modal('hide');
+
+                    }, 1000);
+                }
+                else {
+                    $('#ApplicantListId').hide();
+                    $('#notApplicantMSG').show();
+                }
+
+
+            }
+        });
+    }
+
+    
+    function LoadApplicantDetailsPage(id) {
+        var url = "/Applicant/aplicantdetails/" + id;
+        var win = window.open(url);
+        win.focus();       
+    }
+
+    function LoadApplicantEditDetailsPage(id) {
+        var url = "/Applicant/aplicanteditdetails/" + id;
+        var win = window.open(url);
+        win.focus();
+    }
+
+
+
+    </script>
+}

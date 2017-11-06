@@ -1,0 +1,51 @@
+﻿@model ARMS.Models.Vacancy
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_SuperAdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vacancy</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.closingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.closingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.publishedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.publishedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.publishedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.publishedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isActivated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isActivated)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

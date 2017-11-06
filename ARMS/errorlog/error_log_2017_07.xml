@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<errors>
+  <error>
+    <message>An object with the same key already exists in the ObjectStateManager. The ObjectStateManager cannot track multiple objects with the same key.</message>
+    <innerMessage>
+    </innerMessage>
+    <source>EntityFramework</source>
+    <stackTrace>at System.Data.Entity.Core.Objects.ObjectContext.VerifyRootForAdd(Boolean doAttach, String entitySetName, IEntityWrapper wrappedEntity, EntityEntry existingEntry, EntitySet&amp; entitySet, Boolean&amp; isNoOperation)
+   at System.Data.Entity.Core.Objects.ObjectContext.AttachTo(String entitySetName, Object entity)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.&lt;&gt;c__DisplayClassa.&lt;Attach&gt;b__9()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.ActOnSet(Action action, EntityState newState, Object entity, String methodName)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Attach(Object entity)
+   at System.Data.Entity.Internal.InternalEntityEntry.set_State(EntityState value)
+   at System.Data.Entity.Infrastructure.DbEntityEntry`1.set_State(EntityState value)
+   at ARMS.Controllers.JOBController.SaveJOBDetails(JOB model) in c:\Users\TharukaD\Desktop\ARMS-2\ARMS\Controllers\JOBController.cs:line 100</stackTrace>
+    <createdAt>2017/07/22 15:56:50</createdAt>
+  </error>
+  <error>
+    <message>An object with the same key already exists in the ObjectStateManager. The ObjectStateManager cannot track multiple objects with the same key.</message>
+    <innerMessage>
+    </innerMessage>
+    <source>EntityFramework</source>
+    <stackTrace>at System.Data.Entity.Core.Objects.ObjectContext.VerifyRootForAdd(Boolean doAttach, String entitySetName, IEntityWrapper wrappedEntity, EntityEntry existingEntry, EntitySet&amp; entitySet, Boolean&amp; isNoOperation)
+   at System.Data.Entity.Core.Objects.ObjectContext.AttachTo(String entitySetName, Object entity)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.&lt;&gt;c__DisplayClassa.&lt;Attach&gt;b__9()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.ActOnSet(Action action, EntityState newState, Object entity, String methodName)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Attach(Object entity)
+   at System.Data.Entity.Internal.InternalEntityEntry.set_State(EntityState value)
+   at System.Data.Entity.Infrastructure.DbEntityEntry`1.set_State(EntityState value)
+   at ARMS.Controllers.JOBController.SaveJOBDetails(JOB model) in c:\Users\TharukaD\Desktop\ARMS-2\ARMS\Controllers\JOBController.cs:line 100</stackTrace>
+    <createdAt>2017/07/22 15:56:57</createdAt>
+  </error>
+  <error>
+    <message>An object with the same key already exists in the ObjectStateManager. The ObjectStateManager cannot track multiple objects with the same key.</message>
+    <innerMessage>
+    </innerMessage>
+    <source>EntityFramework</source>
+    <stackTrace>at System.Data.Entity.Core.Objects.ObjectContext.VerifyRootForAdd(Boolean doAttach, String entitySetName, IEntityWrapper wrappedEntity, EntityEntry existingEntry, EntitySet&amp; entitySet, Boolean&amp; isNoOperation)
+   at System.Data.Entity.Core.Objects.ObjectContext.AttachTo(String entitySetName, Object entity)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.&lt;&gt;c__DisplayClassa.&lt;Attach&gt;b__9()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.ActOnSet(Action action, EntityState newState, Object entity, String methodName)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Attach(Object entity)
+   at System.Data.Entity.Internal.InternalEntityEntry.set_State(EntityState value)
+   at System.Data.Entity.Infrastructure.DbEntityEntry`1.set_State(EntityState value)
+   at ARMS.Controllers.JOBController.SaveJOBDetails(JOB model) in c:\Users\TharukaD\Desktop\ARMS-2\ARMS\Controllers\JOBController.cs:line 100</stackTrace>
+    <createdAt>2017/07/22 15:57:10</createdAt>
+  </error>
+  <error>
+    <message>An object with the same key already exists in the ObjectStateManager. The ObjectStateManager cannot track multiple objects with the same key.</message>
+    <innerMessage>
+    </innerMessage>
+    <source>EntityFramework</source>
+    <stackTrace>at System.Data.Entity.Core.Objects.ObjectContext.VerifyRootForAdd(Boolean doAttach, String entitySetName, IEntityWrapper wrappedEntity, EntityEntry existingEntry, EntitySet&amp; entitySet, Boolean&amp; isNoOperation)
+   at System.Data.Entity.Core.Objects.ObjectContext.AttachTo(String entitySetName, Object entity)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.&lt;&gt;c__DisplayClassa.&lt;Attach&gt;b__9()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.ActOnSet(Action action, EntityState newState, Object entity, String methodName)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Attach(Object entity)
+   at System.Data.Entity.Internal.InternalEntityEntry.set_State(EntityState value)
+   at System.Data.Entity.Infrastructure.DbEntityEntry`1.set_State(EntityState value)
+   at ARMS.Controllers.JOBController.SaveJOBDetails(JOB model) in c:\Users\TharukaD\Desktop\ARMS-2\ARMS\Controllers\JOBController.cs:line 100</stackTrace>
+    <createdAt>2017/07/22 15:59:37</createdAt>
+  </error>
+  <error>
+    <message>An object with the same key already exists in the ObjectStateManager. The ObjectStateManager cannot track multiple objects with the same key.</message>
+    <innerMessage>
+    </innerMessage>
+    <source>EntityFramework</source>
+    <stackTrace>at System.Data.Entity.Core.Objects.ObjectContext.VerifyRootForAdd(Boolean doAttach, String entitySetName, IEntityWrapper wrappedEntity, EntityEntry existingEntry, EntitySet&amp; entitySet, Boolean&amp; isNoOperation)
+   at System.Data.Entity.Core.Objects.ObjectContext.AttachTo(String entitySetName, Object entity)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.&lt;&gt;c__DisplayClassa.&lt;Attach&gt;b__9()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.ActOnSet(Action action, EntityState newState, Object entity, String methodName)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Attach(Object entity)
+   at System.Data.Entity.Internal.InternalEntityEntry.set_State(EntityState value)
+   at System.Data.Entity.Infrastructure.DbEntityEntry`1.set_State(EntityState value)
+   at ARMS.Controllers.JOBController.SaveJOBDetails(JOB model) in c:\Users\TharukaD\Desktop\ARMS-2\ARMS\Controllers\JOBController.cs:line 100</stackTrace>
+    <createdAt>2017/07/22 16:00:52</createdAt>
+  </error>
+  <error>
+    <message>Object reference not set to an instance of an object.</message>
+    <innerMessage>
+    </innerMessage>
+    <source>ARMS</source>
+    <stackTrace>at ARMS.Controllers.VacancyController.DeleteVacancy(Vacancy model) in c:\Users\TharukaD\Desktop\ARMS-2\ARMS\Controllers\VacancyController.cs:line 87</stackTrace>
+    <createdAt>2017/07/23 22:28:51</createdAt>
+  </error>
+  <error>
+    <message>Object reference not set to an instance of an object.</message>
+    <innerMessage>
+    </innerMessage>
+    <source>ARMS</source>
+    <stackTrace>at ARMS.Controllers.VacancyController.DeleteVacancy(Vacancy model) in c:\Users\TharukaD\Desktop\ARMS-2\ARMS\Controllers\VacancyController.cs:line 87</stackTrace>
+    <createdAt>2017/07/23 22:31:05</createdAt>
+  </error>
+</errors>

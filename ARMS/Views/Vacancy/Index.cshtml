@@ -1,0 +1,190 @@
+﻿@model IEnumerable<ARMS.Models.Vacancy>
+
+@{
+    if (User.Identity.Name == "Admin")
+    {
+        Layout = "~/Views/Shared/_SuperAdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";   
+    }
+    
+    
+}
+
+<div class="container-fluid container-fullw bg-white">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <h5 class="over-title"> <span class="text-bold">Vacancy Management</span></h5>
+            @*--------------------------------------- Add Vacancy Details------------------------------------------------------------------------------*@
+            <div class="col-md-6 col-sm-6" id="createNewVacancy">
+                <fieldset>
+                    <legend>
+                        Create New Vacancy
+                    </legend>
+                    <div class="form-group">
+                        <label>
+                            Select JOB Title
+                        </label>
+                       
+                        @Html.DropDownList("xa", new SelectList(ViewBag.JOBTitles), new { @class = "form-control  cs-select cs-skin-elastic", @id = "jobTitleSelect" })                    
+                        @*<input type="text" class="form-control" placeholder="Enter JOB Title" id="jobTitle">*@
+                    </div>
+                    
+                    <div class="form-group">                
+                        <h5 class="text margin-top-25 margin-bottom-15">Closing Date</h5>                                       
+                            <p class="input-group input-append date-picker date">
+                                <input type="text" class="form-control datepicker" id="clossingDate" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                </span>
+                            </p>
+                                         
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox clip-check check-primary checkbox-inline">
+                            <input type="checkbox" id="isPublishedCheckBox" onclick="check()">
+                            @*<input type="checkbox" id="isPublishedCheckBox" value="1" checked="" onclick='handleClick(this);'>*@
+                            <label for="isPublishedCheckBox">
+                                Is Published
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="pull-right btn btn-default" id="AddVacancybtn">
+                            Add Vacancy
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+                </fieldset>
+            </div>
+
+            @*--------------------------------------- Edit JOB Details ------------------------------------------------------------------------------*@
+            <div class="col-md-6 col-sm-6" id="editVacancy">
+                <fieldset>
+                    <legend>
+                        Chnage Vacancy Details
+                    </legend>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="VacancyID" style="visibility:hidden;">
+                        <label>
+                            JOB Title
+                        </label>
+                        <input type="text" class="form-control" id="jobTitleE"  disabled>
+                    </div>            
+                    <div class="form-group">
+                        <h5 class="text margin-top-25 margin-bottom-15">Closing Date</h5>                      
+                        <p class="input-group input-append date-picker date">
+                            <input type="text" class="form-control datepicker" id="clossingDateE" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </p>                       
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox clip-check check-primary checkbox-inline">
+                            <input type="checkbox" id="isPublishedCheckBoxE" onclick="checkE()">                         
+                            <label for="isPublishedCheckBoxE">
+                                Is Published
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="pull-right btn btn-default" id="editVacancybtn">
+                            Save Details
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                        <a href="#" class="pull-left" onclick="createNewVacancy()">Create New Vacancy</a>
+                    </div>
+                </fieldset>
+            </div>
+            @*----------------------------------------------------------------------------------------------------------------------------------------*@
+
+
+            <div class="col-md-6 col-sm-6">
+                <fieldset>
+                    <legend>
+                        All Vacancies
+                    </legend>
+
+                    <div class="row">
+                        <div class="form-group col-xs-8 right-side">
+                            <input type="text" class="form-control" placeholder="Search" id="searchVacancy">
+                        </div>
+                        <table id="example112" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>JOB Title</th>
+                                    <th>Closing Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                   
+                                    if (item.isActivated == true) { 
+                                        <tr style="background-color: #A4F988">
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.job.JobTitle)
+                                            </td>
+                                            <td>
+                                               @Html.DisplayFor(modelItem => item.closingDate)
+                                         
+                                            </td>
+                                            <td>
+                                                <a href="#" onclick="editVacancy('@item.VacancyId','@item.job.JobTitle','@item.closingDate','1')">Manage</a> |
+                                                <a href="#" onclick="deleteVacancy('@item.VacancyId','@item.job.JobTitle')">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else { 
+                                        <tr style="background-color: #FFD290">
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.job.JobTitle)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.closingDate)
+                                         
+                                            </td>
+                                            <td>
+                                                <a href="#" onclick="editVacancy('@item.VacancyId','@item.job.JobTitle','@item.closingDate','0')">Manage</a> |
+                                                <a href="#" onclick="deleteVacancy('@item.VacancyId','@item.job.JobTitle')">Delete</a>
+                                            </td>
+                                        </tr>
+                                    
+                                    }
+                                
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('#vacancyList111').toggleClass('active');
+        });
+        
+
+
+        $('.date-picker').datepicker({ autoclose: true }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        
+        
+    </script>
+}

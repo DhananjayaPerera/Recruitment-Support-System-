@@ -1,0 +1,113 @@
+﻿@{
+    Layout = "~/Views/Shared/_VacancyLayout.cshtml";
+}
+
+<div class="container-fluid container-fullw bg-white">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="over-title margin-bottom-15"><span class="text-bold">Current JOB Vacancies</span></h3>
+            <div id="Result">
+
+                @foreach (var item in ViewBag.VacancyList)
+                {
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="panel panel-white min-height-200" style="background-color: #E7E1E0">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    <b>@item.job.JobTitle</b>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <p class="text-small"><u><b>Description </b></u></p>
+                                <p class="text-small"> @item.job.JobDescription</p>
+                                <p class="text-small"> <u><b>Require Qualifications</b></u></p>
+                                <p class="text-small">@item.job.JobRequiredQualification</p>
+                               <p class="text-small"> <mark><b> Closing Date:  @item.closingDate </b></mark></p>
+
+                                <input type="button" class="btn btn-primary btn-o show-tab" value="Apply Now" onclick="location.href='@Url.Action("ApplicationForm", "Home" , new { id=@item.VacancyId})'" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            @if (ViewBag.VacancyList.Count == 0)
+            {
+                <div id="noJobVacancy" class="panel">
+                    <h4 id="noJobVacancyl" style="color:red;"><b>Sorry there is no available job vacancy...!!!</b></h4>
+                </div>
+            }
+
+            @*<div id="noJobVacancy" class="panel">
+                    <h4 id="noJobVacancyl" style="color:white;"><b>Sorry there is no available job vacancy...!!!</b></h4>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+
+        function LoadJOBVacancyAdds() {
+            $.ajax({
+                url: "/Home/LoadVacancies",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert("Error");
+                },
+                success: function (response) {
+                    if (response.length == 0) {
+                        $('#noJobVacancyl').css("color", "red");
+                    }
+                    else {
+                        $('#noJobVacancyl').css("color", "white");
+                        for (i in response) {
+                            loadItem(response[i].job.JobTitle, response[i].job.JobDescription, response[i].job.JobRequiredQualification, convertDateFormat(response[i].closingDate), response[i].VacancyId)
+                        }
+                    }
+                    var dialog = bootbox.dialog({
+                        message:'<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>',
+                        closeButton: false
+                    });
+                    setTimeout(function () {
+                        dialog.modal('hide');
+                    }, 2500);
+                }
+            });
+        }
+
+
+        function loadItem(title,description,reqQualification,clossingDate,vacancyId) {
+            var data =
+                "<div class='col-lg-4 col-sm-6'><div class='panel panel-white min-height-200' style='background-color: #E7E1E0'><div class='panel-heading'> <div class='panel-title'> <b>" + title + "</b> </div></div>  <div class='panel-body'><p class='text-small'><u><b>Description </b></u></p>  <p class='text-small'>" + description + "</p> <p class='text-small'> <u><b>Require Qualifications</b></u></p>  <p class='text-small'>" + reqQualification + "</p> <p class='text-small'> <mark><b> Closing Date: " + clossingDate + "</b></mark></p>  <a href='/Home/ApplicationForm/" + vacancyId + "' class='btn btn-primary btn-o show-tab'>Apply now</a> </div>  </div></div>";
+            document.getElementById('Result').innerHTML += data;
+        }
+
+
+        function convertDateFormat(date) {
+            var MyDate_String_Value = date;
+            var value = new Date
+            (
+            parseInt(MyDate_String_Value.replace(/(^.*\()|([+-].*$)/g, ''))
+            );
+            var h = value.getHours();
+            var suffix = (h < 12) ? 'AM' : 'PM';
+            if (h > 12) {
+                h = h - 12;
+            }
+
+            var dat = value.getMonth() +
+            1 +
+            "/" +
+            value.getDate() +
+            "/" +
+            value.getFullYear();
+            return dat;
+        }
+
+    </script>
+}
+

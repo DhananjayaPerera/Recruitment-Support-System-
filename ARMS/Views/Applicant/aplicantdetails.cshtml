@@ -1,0 +1,343 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid container-fullw bg-white">
+    <div class="row">
+        <div class="col-md-12">
+            
+            <h4 style="color: #696565" id="jobTitle">@ViewBag.ApplicantDetails.vacancy.job.JobTitle</h4>
+            <hr>
+            <h2 id="JOBApplicationID" style="visibility:hidden" >@ViewBag.ApplicantDetails.ApplicantId</h2>
+            
+            <h2>@ViewBag.ApplicantDetails.firstName &nbsp;@ViewBag.ApplicantDetails.lastName</h2>
+            <h5 style="margin-left:10px;">&nbsp;Gender:&nbsp;@ViewBag.ApplicantDetails.Gender</h5>
+            <h5 style="margin-left:10px;">&nbsp;Age:&nbsp;@ViewBag.Age</h5>
+            <h5 style="margin-left:10px;">&nbsp;City:&nbsp;@ViewBag.ApplicantDetails.City</h5>
+           
+            @Html.ActionLink("Open CV SoftCopy", "OpenPDF", "Applicant", new { path = "~/UploadCV/" + @ViewBag.ApplicantDetails.vacancy.job.JobTitle + "/" + @ViewBag.ApplicantDetails.vacancy.VacancyId + "/"  , fileName = @ViewBag.ApplicantDetails.ApplicantId+".pdf" }, new { target = "_blank" })
+            <hr>
+
+            <div class="row">
+                <div class="col-md-6" style="margin-top: 10px; margin-bottom: 10px;">
+                    <div class="col-md-1">                       
+                        
+                    </div>
+                    <div class="col-md-11">
+                        <h5><i class="ti ti-anchor" style="color:blue;"></i>&nbsp;&nbsp;&nbsp;@ViewBag.ApplicantDetails.phoneNumber</h5>
+                        <h5 id="emailAddress"><i class="ti ti-email" style="color:blue;"></i>&nbsp;&nbsp;&nbsp;@ViewBag.ApplicantDetails.email</h5>                       
+                        <h5><i class="ti ti-home" style="color:blue;"></i>&nbsp;&nbsp;&nbsp;@ViewBag.ApplicantDetails.address</h5>
+                        <h5><i class="ti ti-anchor"  style="color:blue;"></i>&nbsp;&nbsp;&nbsp;<b>DOB:&nbsp;</b>@ViewBag.ApplicantDetails.DOB.Month/@ViewBag.ApplicantDetails.DOB.Day/@ViewBag.ApplicantDetails.DOB.Year</h5>
+                        <label class="control-label">
+                           
+                        </label>
+                        
+                    </div>
+                </div>
+                <div class="col-md-6" style="margin-top: 10px; margin-bottom: 10px;">
+                    <div class="row">
+                        
+                        <div class="col-md-5 col-sm-5 col-xs-12">
+                            <h5 class="text-bold margin-top-25 margin-bottom-15"> <b> Interview Date & Time</b></h5>
+                            <div class="form-group">                             
+                                <div class='input-group date' id='datetimepicker1'>
+                                    <input type='text' class="form-control" id="dateTime"/>
+                                    <span class="input-group-addon" id="dateTime1">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>                                       
+                                </div>                               
+                            </div>
+                        </div>
+                        @*dateTime,period,ApplicationID*@
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <h5 class="text-bold margin-top-25 margin-bottom-15"> <b> Interview Duration</b></h5>
+                            <div class="form-group">
+                                <select name="period" id="period" class="form-control">                                  
+                                    <option value="15">15 min</option>
+                                    <option value="30">30 min</option>
+                                    <option value="60">1 hour</option>
+                                    <option value="120">2 hour</option>
+                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <div class="form-group">
+                                <h5 class="text-bold margin-top-25 margin-bottom-15" style="color: #D4D2D2">  Interview Time</h5>
+                                <button type="button" class="pull-left btn btn-primary" id="Allocate">
+                                    Allocate
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>                                    
+                </div>                                    
+                
+            </div>
+
+           
+            <hr>
+
+            <div class="row" id="AllocateInterViewPanel">
+                <div class="col-md-2 col-sm-2"></div>
+                <div class="col-md-8 col-sm-8">
+                    <h4 class="text-bold margin-top-25 margin-bottom-15"> <b> Allocate Interview Panel Members</b></h4>
+
+                    <div id="noSystemUsers">
+                        <h4 id="noSystemUsers1" style="color:red;"><b>Sorry there is no available System Users yet...!!!</b></h4>
+                    </div>
+
+
+                    <div id="toppings">
+                      
+                    </div>
+                  
+                    <button type="button" class="col-xs-3 btn btn-primary" id="SaveChanges">
+                        Save
+                        <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+
+                    <label class="control-label">
+                    </label>
+
+                </div>
+                <div class="col-md-2 col-sm-2"></div>
+            </div>
+            <hr>
+              
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+       // var interviewPanel = "";
+        var userNameList = [];    //----------- assign Interview Panel Members ----------------------//
+
+        $(document).ready(function (e) {
+
+            $("#AllocateInterViewPanel").hide();
+            $("#noSystemUsers").hide();
+            $("#SaveChanges").prop("disabled", true);
+            
+
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+
+            $('#dateTime').on('input', function (e) {
+                $('#dateTime').css("border-color", "#D5D8D6");
+                $("#AllocateInterViewPanel").hide(1000);
+            });
+            $('#dateTime1').on('click', function (e) {
+                $('#dateTime').css("border-color", "#D5D8D6");
+                $("#AllocateInterViewPanel").hide(1000);
+            });
+            $('#period').on('click', function (e) {
+                $("#AllocateInterViewPanel").hide(1000);
+            });
+
+            $("#Allocate").click(function () {
+                if (validateVacancyInputs()) {
+                    LoadInterviewPanelMembers();
+                    var dialog = bootbox.dialog({
+                        message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>',
+                        closeButton: false
+                    });
+                    setTimeout(function () {
+                        dialog.modal('hide');
+                        $("#AllocateInterViewPanel").show(1000);
+                    }, 1500);
+                    //SendMail();
+                }              
+            });
+         
+        });
+        
+        //------------ Validate Input -------------------------------------//
+        function validateVacancyInputs() {
+            det = false;
+            if (!$("#dateTime").val()) {
+                $('#dateTime').css("border-color", "red");
+            }
+
+            if ($("#dateTime").val()) {
+                $('#dateTime').css("border-color", "#D5D8D6");
+                det = true;
+            }
+            return det;
+        }
+
+        //------------------------------------- Send Mails -------------------------------------//
+        function SendMail() {
+
+            var jsonObject = {
+                "EmailSubject": $("#dateTime").text(),
+                "EmailBody": $("#dateTime").val(),
+                "To": $("#emailAddress").text()
+            };
+            $.ajax({
+                url: "/Applicant/SendMailToApplicant",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert("error");
+                },
+                success: function (response) {
+                    var dialog = bootbox.dialog({
+                        message: '<p class="text-center"> Successfully Send Mail to applicant...</p>',
+                        closeButton: false
+                    });
+                    setTimeout(function () {
+                        dialog.modal('hide');
+                    }, 1500);
+                }
+            });
+        }
+
+
+        //--------------------------- Load InterviewPanel Members -------------------------------------//
+        function LoadInterviewPanelMembers() {
+
+            var jsonObject = {
+                "firstName": $("#dateTime").text()
+            };
+
+            $.ajax({
+                url: "/Applicant/LoadInterviewPanelMembers",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert("error");
+                },
+                success: function (response) {
+                    if (response.length == 0) {
+                        $("#noSystemUsers").show();
+                    }
+                    else {
+                        $("#noSystemUsers").hide();
+                        document.getElementById('toppings').innerHTML = null;
+                        for (i in response) {
+                            loadMembers(response[i].fullName, response[i].JobRole, response[i].UserName);
+                            loadsScripts();
+                        }
+                    }
+                }
+            });
+        }
+
+
+        //----------- Display Interview Panel Members Names ---------------------------------------------// 
+        function loadMembers(fullName,role,userName) {
+            if (role == "Managing Assisstance") {
+                role = "MA";
+            }
+            else {
+                role = "IB";
+            }
+            var data =
+                "<div> <label><input type='checkbox' name='" + userName + "' value='" + userName + "' /> <b>[" + role + "]&nbsp;</b> " + fullName + "</label></div>"        
+            document.getElementById('toppings').innerHTML += data;
+        }
+        
+
+
+        //------------- Load Interview Panel Members -----------------------------------------------------//
+        function loadsScripts() {
+            userNameList = [];
+            var el = document.getElementById('toppings');
+            var tops = el.getElementsByTagName('input');
+
+
+            for (var i = 0, len = tops.length; i < len; i++) {
+                if (tops[i].type === 'checkbox') {
+                    tops[i].onclick = function () {
+                        if (this.checked) {
+                            userNameList.push(this.value);
+                           
+                            if(userNameList.length==1){
+                               $("#SaveChanges").prop("disabled", false);
+                            }
+                        }
+                        else {
+                            var index = userNameList.indexOf(this.value);  
+                            if (index !== -1) {
+                                userNameList.splice(index, 1);
+                            }
+                            if (userNameList.length == 0) {
+                                 $("#SaveChanges").prop("disabled", true);
+                            }
+                           
+                        }
+                    }
+                }
+            }
+        }
+
+        var dialogx = null;
+        $("#SaveChanges").click(function () {
+            var interviewPanelMembers = "";
+            for (i in userNameList) {
+                interviewPanelMembers += userNameList[i] + ",";
+            }
+            SaveAndSendEmails(interviewPanelMembers);
+             dialogx = bootbox.dialog({
+                message: '<p><i class="fa fa-spin fa-spinner"></i> Save Details and sending Emails...</p>',
+                closeButton: false
+            });
+            //setTimeout(function () {
+            //    dialog.modal('hide');
+                
+            //},2000);
+           // alert(interviewPanelMembers);
+        });
+
+       
+
+        function SaveAndSendEmails(interiewPanel) {
+            var jsonObject = {
+                "InterviewDateTime": $("#dateTime").val(),
+                "ZipCode": $("#period").val(),
+                "ApplicantId": $("#JOBApplicationID").text(),
+                "City": interiewPanel,
+                "email": $("#emailAddress").text(),
+                "Gender": $("#jobTitle").text()
+            };
+            
+            $.ajax({
+                url: "/Applicant/SendEmailsAndSaveDetails",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert("error");
+                },
+                success: function (response) {
+                    dialogx.modal('hide');
+                    alert(response);
+                }
+            });
+        }
+
+
+        function print(list) {
+            var x = "";
+            for (i in list) {
+                x += list[i] + ",";
+            }
+            return x;
+        }
+        
+     
+        
+    </script>
+}
+
+

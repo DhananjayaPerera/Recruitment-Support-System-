@@ -1,0 +1,137 @@
+﻿@model IEnumerable<ARMS.Models.JOB>
+
+@{   
+    Layout = "~/Views/Shared/_SuperAdminLayout.cshtml";
+}
+
+
+<div class="container-fluid container-fullw bg-white">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <h5 class="over-title"> <span class="text-bold">JOBs Management</span></h5>
+            @*--------------------------------------- Add JOB Details------------------------------------------------------------------------------*@
+            <div class="col-md-6 col-sm-6" id="createNewJob">
+                <fieldset>
+                    <legend>
+                        Create New JOB
+                    </legend>
+                    <div class="form-group">
+                        <label>
+                            JOB Title
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter JOB Title" id="jobTitle">
+                    </div>
+                    <div class="form-group" id="duplicateJOBErr" style="color:white;">
+                        <span><b>This JOB Title Already Exixt !!!</b></span>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            JOB Description
+                        </label>                     
+                        <textarea class="form-control autosize" placeholder="Enter JOB Description" id="jobDescription"></textarea>                   
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Required Qualifications
+                        </label>
+                        <textarea class="form-control autosize" placeholder="Enter Required Qualifications" id="requiredQulification"></textarea>  
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="pull-right btn btn-default" id="AddJOBbtn">
+                            Add New JOB
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+                </fieldset>
+            </div>
+
+            @*--------------------------------------- Edit JOB Details ------------------------------------------------------------------------------*@
+            <div class="col-md-6 col-sm-6" id="editJob">
+                <fieldset>
+                    <legend>
+                        Chnage JOB Details
+                    </legend>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="jobId" style="visibility:hidden;">
+                        <label>
+                            JOB Title
+                        </label>                
+                        <input type="text" class="form-control" placeholder="Enter JOB Title" id="jobTitleE" disabled>
+                    </div>
+                    <div class="form-group" id="duplicateErrE" style="color:white;">
+                        <span><b>This JOB Title Already Exixt !!!</b></span>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            JOB Description
+                        </label>
+                        <textarea class="form-control autosize" placeholder="Enter JOB Description" id="jobDescriptionE"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Required Qualifications
+                        </label>
+                        <textarea class="form-control autosize" placeholder="Enter Required Qualifications" id="requiredQulificationE"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="pull-right btn btn-default" id="editJOBbtn">
+                            Save Details
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                        <a href="#" class="pull-left" onclick="createNewJOB()">Create New JOB</a>
+                    </div>
+                </fieldset>
+            </div>
+            @*----------------------------------------------------------------------------------------------------------------------------------------*@
+
+
+            <div class="col-md-6 col-sm-6">
+                <fieldset>
+                    <legend>
+                        All JOBS
+                    </legend>
+
+                    <div class="row">
+                        <div class="form-group col-xs-8 right-side">
+                            <input type="text" class="form-control" placeholder="Search" id="searchJOB">
+                        </div>
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>JOB Title</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.JobTitle)
+                                        </td>
+                                        <td>
+                                            @*@item.Id','*@
+                                            <a href="#" onclick="editJOB('@item.JOBId','@item.JobTitle','@item.JobDescription','@item.JobRequiredQualification')">Manage</a> |
+                                            <a href="#" onclick="deleteJOB('@item.JOBId','@item.JobTitle')">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('#jobList').toggleClass('active');
+        });
+    </script>
+}
+

@@ -1,0 +1,282 @@
+﻿<!DOCTYPE html>
+<html lang="en"><!DOCTYPE html>
+<html lang="en">
+<!--<![endif]-->
+<!-- start: HEAD -->
+<head>
+    <title>ARMS</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Template/assets/images/money1.png" />
+    <!-- start: META -->
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- end: META -->
+    <!-- start: GOOGLE FONTS -->
+    <link href="~/Content/Template/assets/css/googleFonts.css" rel="stylesheet" />
+    @* <link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />*@
+    <!-- end: GOOGLE FONTS -->
+    <!-- start: MAIN CSS -->
+    <link rel="stylesheet" href="~/Content/Template/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/Template/vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/Template/vendor/themify-icons/themify-icons.min.css">
+
+    <link href="~/Content/Template/vendor/animate.css/animate.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/Template/vendor/perfect-scrollbar/perfect-scrollbar.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/Template/vendor/switchery/switchery.min.css" rel="stylesheet" media="screen">
+
+    <link rel="stylesheet" href="~/Content/Template/assets/css/styles.css">
+    <link rel="stylesheet" href="~/Content/Template/assets/css/plugins.css">
+    <link href="~/Content/Template/assets/css/themes/theme-6.css" rel="stylesheet" />  @*Used theme-6*@
+    <link href="~/Content/Template/vendor/DataTables/css/DT_bootstrap.css" rel="stylesheet" media="screen">
+    <link href="~/Content/MultiSelect/bootstrap-multiselect.css" rel="stylesheet" />
+    <link href="~/Content/Template/vendor/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/Template/vendor/bootstrap-timepicker/bootstrap-timepicker.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    @*<script src="~/Scripts/jquery-2.1.1.min.js"></script>*@
+
+    <script src="~/Content/Template/vendor/DataTables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Template/assets/js/table-data.js"></script>
+    <script src="~/Content/Template/vendor/select2/select2.min.js"></script>
+
+    <script src="~/Content/MultiSelect/bootstrap-multiselect.js"></script>
+    <script src="~/Content/Bootbox.min.js"></script>
+
+    <script src="~/Content/Template/vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/Template/vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="~/Content/Template/assets/js/form-elements.js"></script>
+
+</head>
+<!-- end: HEAD -->
+<body>
+    <div id="app" class="bg-white">
+        <!-- sidebar -->
+        <div class="sidebar app-aside" id="sidebar">
+            <div class="sidebar-container perfect-scrollbar">
+                <nav>
+                    <!-- start: MAIN NAVIGATION MENU -->
+                    @*<div class="navbar-title">
+                        <span>Main Navigation</span>
+                    </div>
+                    <ul class="main-navigation-menu">*@
+                        @*<li id="DashboardList">
+                            <a href="@Url.Action("Index", "DashBoard")">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-home"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> Dashboard </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li id="PackageList">
+                            <a href="@Url.Action("ManagePackage", "Package")">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-folder"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> Packages </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li id="CategoryList">
+                            <a href="@Url.Action("ManageCategory", "CategoryManaged")">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-book"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> Categories </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li id="EmployeeList">
+                            <a href="@Url.Action("ManageEmployees", "Employee")">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-user"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> Employees  </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>*@
+                    @*</ul>*@
+                    @*<div class="navbar-title">
+                        <span>Administration Features</span>
+                    </div>
+                    <ul class="folders">
+                        <li id="jobList">
+                            <a href="@Url.Action("Index", "JOB")">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-calendar"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> Manage JOBS </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li id="UserList">
+                            <a href="@Url.Action("ManageUsers", "Account")">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-user"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> Users </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+                    <div class="navbar-title">
+                        <span>System Reports</span>
+                    </div>
+                    <ul class="main-navigation-menu">
+
+                        <li id="SysReportList">
+                            <a href="#">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-layout-grid2"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> Reports </span><i class="icon-arrow"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <ul class="sub-menu">
+                                <li id="EmployeesTransactionRpt">
+                                    <a href="@Url.Action("EmployeesReloadTransaction", "EmployeeTransactionReport")"> Employees Reload Transaction </a>
+                                </li>
+                                <li id="EmployeesInvoiceTransactionRpt">
+                                    <a href="@Url.Action("EmployeesInvoiceTransaction", "EmployeeTransactionReport")"> Employees Invoice Transaction </a>
+                                </li>
+                                <li id="CurrentBalanceRpt">
+                                    <a href="@Url.Action("CurrentAvailableBalance", "EmployeeTransactionReport")"> Currently Available Balance</a>
+                                </li>
+                            
+                            </ul>
+
+                        </li>
+                    </ul>*@
+
+                    <!-- end: MAIN NAVIGATION MENU -->
+
+
+                </nav>
+            </div>
+        </div>
+        <!-- / sidebar -->
+        <div class="app-content">
+            <!-- start: TOP NAVBAR -->
+            <header class="navbar navbar-default navbar-static-top">
+                <!-- start: NAVBAR HEADER -->
+                <div class="navbar-header">
+                    <a href="#" class="sidebar-mobile-toggler pull-left hidden-md hidden-lg" class="btn btn-navbar sidebar-toggle" data-toggle-class="app-slide-off" data-toggle-target="#app" data-toggle-click-outside="#sidebar">
+                        <i class="ti-align-justify"></i>
+                    </a>
+                    <a class="navbar-brand" href="#">
+                        @*<img src="~/Content/Template/assets/images/logo.png" alt="Clip-Two" />*@
+                        ARMS
+                    </a>
+                    <a href="#" class="sidebar-toggler pull-right visible-md visible-lg" data-toggle-class="app-sidebar-closed" data-toggle-target="#app">
+                        <i class="ti-align-justify"></i>
+                    </a>
+                    <a class="pull-right menu-toggler visible-xs-block" id="menu-toggler" data-toggle="collapse" href=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="ti-view-grid"></i>
+                    </a>
+                </div>
+                <!-- end: NAVBAR HEADER -->
+                <!-- start: NAVBAR COLLAPSE -->
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-left nav nav-tabs">
+
+                        <li class="active">
+                            <a href="#myTab1_example1" data-toggle="tab">
+                                JOB Vacancies
+                            </a>
+                        </li>
+
+                    </ul>
+
+
+                            @*<ul class="nav navbar-right">
+
+                                <li class="dropdown current-user">
+                                    <a href class="dropdown-toggle" data-toggle="dropdown">
+                                        <img src="~/Content/Template/assets/images/avatar-1.jpg" alt="Peter"> <span class="username" style="color:aqua">admin  <i class="ti-angle-down"></i></i></span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-dark">
+                                        <li>
+                                            <a href="@Url.Action("Manage", "Account")">
+                                                My Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("LogOff", "Account")">
+                                                Log Out
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>*@
+</div>
+            </header>
+            <!-- end: TOP NAVBAR -->
+            <div class="main-content">
+
+                <div class="wrap-content container" id="container">
+                    @RenderBody()
+                </div>
+
+            </div>
+        </div>
+        <!-- start: FOOTER -->
+        
+        <!-- end: FOOTER -->
+        <!-- start: OFF-SIDEBAR -->
+        <!-- end: OFF-SIDEBAR -->
+
+    </div>
+    <!-- start: MAIN JAVASCRIPTS -->
+
+    <script src="~/Content/Template/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/Template/vendor/modernizr/modernizr.js"></script>
+    <script src="~/Content/Template/vendor/jquery-cookie/jquery.cookie.js"></script>
+    <script src="~/Content/Template/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/Content/Template/vendor/switchery/switchery.min.js"></script>
+    <script src="~/Content/Template/assets/js/main.js"></script>
+    <script src="~/Scripts/bootbox.min.js"></script>
+
+    @*--------------------------- custom javascripts ---------------------------------------*@
+    <script src="~/Scripts/Custom/ManageUsers.js"></script>
+    <script src="~/Scripts/Custom/ManageJOBS.js"></script>
+    <script src="~/Scripts/Custom/JobApplicationForm.js"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            Main.init();
+            TableData.init();
+        });
+    </script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

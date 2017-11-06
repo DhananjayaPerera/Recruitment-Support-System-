@@ -1,0 +1,483 @@
+﻿@model IEnumerable<ARMS.Models.ApplicationUser>
+@{
+    Layout = "~/Views/Shared/_SuperAdminLayout.cshtml";
+}
+
+
+
+<div class="container-fluid container-fullw bg-white">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <h5 class="over-title"> <span class="text-bold">System User Management</span></h5>
+
+            @*------------------  --------  ---------- Add New User------------ ----------------- --------------------------*@
+            <div class="col-md-6 col-sm-6" id="addUser">
+                <fieldset>
+                    <legend>
+                        Create New System User
+                    </legend>
+                    <div class="form-group">
+                        <label>
+                            UserName
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter UserName" id="userName">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            Full Name
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter Full Name" id="fullName">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            Email Address
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter Email" id="emailAddress">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            User Role
+                        </label>
+                        @Html.DropDownList("selectUserRole", new List<SelectListItem>() { new SelectListItem { Text = "Managing Assisstance", Value = "Managing Assisstance" }, new SelectListItem { Text = "Interview Board Member", Value = "Interview Board Member" } }, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            Password
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter Password" id="password">
+                    </div>
+                    <div class="form-group" id="passwordErr" style="color:white;">
+                        <span><b>Password should contain at least 6 characters!!!</b></span>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Repeat Password <span class="symbol required"></span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Repeat Password" id="compassword">
+                    </div>
+                    <div class="form-group" id="duplicateErr" style="color:white;">
+                        <span><b>This User Already Exixt !!!</b></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="pull-right btn btn-default" id="AddUser">
+                            Add New User
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+                </fieldset>
+            </div>
+
+            @*------------------  --------  ---------- Edit New User------------ ----------------- --------------------------*@
+            <div class="col-md-6 col-sm-6" id="editUser">
+                <fieldset>
+                    <legend>
+                        Edit System User
+                    </legend>
+
+                    <div class="form-group">
+                        <label>
+                            UserName
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter UserName" id="userNameE" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            Full Name
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter UserName" id="fullNameE" disabled>
+                    </div>
+                    
+                    <div class="form-group" id="emailDiv">
+                        <label>
+                            Email Address
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter UserName" id="emailAddressE" disabled>
+                        <a href="#" onclick="changeEmailAddress()">Change Email Address</a>
+                    </div>
+
+                    @*--------------------------------    Change Email Address   ------------------------------------------*@
+                    <div class="form-group" id="changeEmailDiv">
+                        <label style="color:blue;">
+                            Email Address
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter New Email Address" id="emailAddressEE">
+                        <button type="button" class="pull-right btn btn-primary" id="changeEmailAddressBtn">
+                            Save Changes
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+                    @*------------------------------------------------------------------------------------------------------*@
+
+                    <div class="form-group">
+                        <label>
+                            User Role
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter UserName" id="userRoleE" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            Password
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter New Password" id="passwordE">
+                    </div>
+                    <div class="form-group" id="passwordErrE" style="color:white;">
+                        <span><b>Password should contain at least 6 characters!!!</b></span>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Repeat Password <span class="symbol required"></span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter New Password" id="compasswordE">
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="pull-left">
+                            @Html.ActionLink("Add new User", "ManageUsers", "Account")
+                        </div>
+
+                        <button type="button" class="pull-right btn btn-default" id="changePassword">
+                            Change Password
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+                </fieldset>
+            </div>
+
+
+            <div class="col-md-6 col-sm-6">
+                <fieldset>
+                    <legend>
+                        All System Users
+                    </legend>
+                    <div class="row">
+                        <div class="form-group col-xs-8 right-side">
+                            <input type="text" class="form-control" placeholder="Search" id="searchUser">
+                        </div>
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>User Name</th>
+                                    <th>Full Name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    ViewBag.role = "";
+                                    
+                                    if (item.JobRole == "Managing Assisstance")
+                                    {
+                                        ViewBag.role = "MA";
+                                    }
+                                    if (item.JobRole == "Interview Board Member")
+                                    {
+                                        ViewBag.role = "IB";
+                                    }
+                                    <tr> 
+                                       
+                                        <td>                
+                                            @ViewBag.role                           
+                                        </td>
+                                        
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UserName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.fullName)
+                                        </td>
+                                        <td>
+                                            <a href="#" onclick="editUser('@item.UserName','@item.fullName','@item.emailAddress','@item.JobRole')">Manage</a> |
+                                            <a href="#" onclick="deleteUser('@item.UserName')">Delete</a>
+                                            
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('#UserList').toggleClass('active');
+        });
+    </script>
+}
+
+
+@*@section Scripts
+{
+    <script>
+        function deleteUser(x) {
+            bootbox.confirm("Do You want to Delete this user   UserName : "+x, function (result) {
+                if (result) {
+                    RemoveUser(x);
+                } else {
+
+                }
+            });
+        }
+        function editUser(x) {
+            $("#addUser").hide(1000);
+            $("#editUser").show(1000);
+
+            $("#userNameE").val(x);
+
+        }
+
+
+        $("#passwordErrE").hide();
+        $("#editUser").hide();
+        $("#duplicateErr").hide();
+        $("#passwordErr").hide();
+
+
+        $('#userName').on('input', function (e) {
+            $('#userName').css("border-color", "#D5D8D6");
+            $("#duplicateErr").hide();
+            $("#passwordErr").hide();
+        });
+        $('#password').on('input', function (e) {
+            $('#password').css("border-color", "#D5D8D6");
+            $('#compassword').css("border-color", "#D5D8D6");
+            $('#compassword').val("");
+            $("#duplicateErr").hide();
+            $("#passwordErr").hide();
+        });
+        $('#compassword').on('input', function (e) {
+            $('#compassword').css("border-color", "#D5D8D6");
+            $("#duplicateErr").hide();
+            $("#passwordErr").hide();
+        });
+
+
+        $('#passwordE').on('input', function (e) {
+            $('#passwordE').css("border-color", "#D5D8D6");
+            $('#compasswordE').css("border-color", "#D5D8D6");
+            $('#compasswordE').val("");
+            $("#passwordErrE").hide();
+        });
+        $('#compasswordE').on('input', function (e) {
+            $('#compasswordE').css("border-color", "#D5D8D6");
+            $("#passwordErrE").hide();
+        });
+
+
+        $('#searchCompany').on('input', function (e) {
+            Filter();
+        });
+
+
+        $("#AddUser").click(function () {
+            var det = validateInputs();
+
+            if (det == true) {
+                CreateUser();
+            }
+
+            return det;
+        });
+
+        $("#changePassword").click(function () {
+            var det = validateInputsForChangePassword();
+
+            if (det == true) {
+                changePassword();
+                //alert("ghj");
+            }
+
+            return det;
+        });
+
+
+
+
+
+        function validateInputs() {
+            det = false;
+            if (!$("#userName").val()) {
+                $('#userName').css("border-color", "red");
+            }
+            if (!$("#password").val()) {
+                $('#password').css("border-color", "red");
+            }
+            if (!$("#compassword").val()) {
+                $('#compassword').css("border-color", "red");
+            }
+            if ($("#compassword").val() && $("#password").val() && ($("#password").val() != $("#compassword").val())) {
+                $('#password').css("border-color", "red");
+                $('#compassword').css("border-color", "red");
+            }
+
+            if ($("#compassword").val() && $("#password").val() && ($("#password").val() == $("#compassword").val()) && ($("#password").val()).length < 6) {
+                $('#password').css("border-color", "red");
+                $("#passwordErr").show();
+
+            }
+
+            if ($("#userName").val() && $("#password").val() && $("#compassword").val() && ($("#password").val() == $("#compassword").val()) && ($("#password").val()).length >=6 ) {
+                $('#password').css("border-color", "#D5D8D6");
+                $('#compassword').css("border-color", "#D5D8D6");
+                det = true;
+            }
+            return det;
+        }
+
+
+        function validateInputsForChangePassword() {
+            det = false;
+
+            if (!$("#passwordE").val()) {
+                $('#passwordE').css("border-color", "red");
+            }
+            if (!$("#compasswordE").val()) {
+                $('#compasswordE').css("border-color", "red");
+            }
+            if ($("#compasswordE").val() && $("#passwordE").val() && ($("#passwordE").val() != $("#compasswordE").val())) {
+                $('#passwordE').css("border-color", "red");
+                $('#compasswordE').css("border-color", "red");
+            }
+
+            if ($("#compasswordE").val() && $("#passwordE").val() && ($("#passwordE").val() == $("#compasswordE").val()) && ($("#passwordE").val()).length < 6) {
+                $('#passwordE').css("border-color", "red");
+                $("#passwordErrE").show();
+            }
+
+            if ($("#userNameE").val() && $("#passwordE").val() && $("#compasswordE").val() && ($("#passwordE").val() == $("#compasswordE").val()) && ($("#passwordE").val()).length >= 6) {
+                $('#passwordE').css("border-color", "#D5D8D6");
+                $('#compasswordE').css("border-color", "#D5D8D6");
+                det = true;
+            }
+            return det;
+        }
+
+
+
+        //----------------- Create User -------------------------------------//
+        function CreateUser() {
+            var jsonObject = {
+                "UserName": $("#userName").val(),
+                "Password": $("#password").val(),
+                "ConfirmPassword": $("#compassword").val()
+            };
+            $.ajax({
+                url: "/Account/RegisterNewUser",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert("error");
+                },
+                success: function (response) {
+
+                    if (response.length != 0) {
+                        window.location.replace("/Account/ManageUsers");
+                    }
+                    else {
+                        $('#userName').css("border-color", "red");
+                        $('#password').css("border-color", "red");
+                        $('#compassword').css("border-color", "red");
+                        $("#duplicateErr").show();
+
+                    }
+                }
+            });
+        }
+
+        //------------- Change Password ---------------------------//
+        function changePassword() {
+            var jsonObject = {
+                "UserName": $("#userNameE").val(),
+                "Password": $("#passwordE").val()
+            };
+            $.ajax({
+                url: "/Account/changePassword",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert("error");
+                },
+                success: function (response) {
+                    var dialog = bootbox.dialog({
+                        message: '<p class="text-center">Password Successfully changed...</p>',
+                        closeButton: false
+                    });
+                    setTimeout(function () {
+                        dialog.modal('hide');
+                        $("#compasswordE").val("");
+                        $("#passwordE").val("");
+                        $("#addUser").show(1000);
+                        $("#editUser").hide(1000);
+                    }, 1500);
+
+                }
+            });
+        }
+
+        //----------- Remove User -------------------------------------//
+        function RemoveUser(userName) {
+            var jsonObject = {
+                "UserName": userName
+            };
+            $.ajax({
+                url: "/Account/RemoveUser",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert(response.toString());
+                },
+                success: function (response) {
+                    window.location.replace("/Account/ManageUsers");
+                }
+          });
+        }
+
+
+        //-------------------- Filter Users -----------------------------------//
+        function Filter() {
+            var jsonObject = {
+                "CompanyName": $("#searchCompany").val()
+            };
+            $.ajax({
+                url: "@Url.Action("FilterCompanies")",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert("error");
+                },
+                success: function (response) {
+                    $("#example1").empty();
+                    $('#example1').append($('<tr/>').append($('<th/>').append("Company Name"), $('<th/>').append("Company Code"), $('<th/>').append("")));
+                    for (i in response) {
+
+                        $('#example1').append($('<tr/>').append($('<td/>').append(response[i].CompanyName), $('<td/>').append(response[i].CompanyCode), $('<td/>').append('<a href="/Company/Edit/' + parseInt(response[i].Id) + '">Edit</a>' + ' | ' + '<a href="/Company/Delete/' + parseInt(response[i].Id) + '">Remove</a>')));
+                    }
+                }
+            });
+        }
+
+</script>
+}*@

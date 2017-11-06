@@ -1,0 +1,164 @@
+﻿
+@{    
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+}
+
+
+
+<div class="container-fluid container-fullw bg-white">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-transparent">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <b>All Interview Applicants</b>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    
+                    <table class="table" id="example1">
+                        <tbody>
+                            @if (User.Identity.Name != "Admin") {
+                                foreach (var item in ViewBag.AssignApplications)
+                                {
+                                    if (@item.marks == 0) { 
+                                        <tr style="background-color: #A4F988; ">
+                                            <td>@item.firstName  @item.lastName</td>
+                                            <td class="right-side">
+                                                <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                    <a href="#" onclick=LoadApplicantDetailsPage(@item.ApplicantId) class="btn btn-transparent btn-xs"><i class="fa fa-angle-right"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>  
+                                    }
+                                    else
+                                    {
+                                        <tr style="background-color: #FFD290; ">
+                                            <td>@item.firstName  @item.lastName</td>
+                                            <td class="right-side">
+                                                <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                    <a href="#" onclick=LoadApplicantDetailsPage(@item.ApplicantId,@item.firstName,@item.lastName) class="btn btn-transparent btn-xs"><i class="fa fa-pencil"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>  
+                                    }
+                                
+                                }
+                            }
+                           
+                              
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid container-fullw bg-white" id="ApplicantDetails">
+            <div class="col-md-8 " id="">
+
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                    <h5 class="text-bold margin-top-25 margin-bottom-15"> <b> <span id="ApplicantName"></span></b></h5>
+                    <div class="form-group">
+                        <div class='input-group date' >
+                            <input type="text" class="form-control" placeholder="Enter Marks" id="ApplicantMarks">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="form-group">
+                        <h5 class="text-bold margin-top-25 margin-bottom-15" style="color:white">  Interview Time</h5>
+                        <button type="button" class="pull-left btn btn-primary" id="Allocate">
+                            Save Marks
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+       
+        $('#ApplicantDetails').hide();
+        $(document).ready(function (e) {
+            $('#addMarks').toggleClass('active');
+            
+            
+        });
+
+        //----------------- Save Applicant Marks -------------------------------------//
+        function SaveApplicantMarks(ApplicantId) {
+            var jsonObject = {
+                "ApplicantId": ApplicantId,
+                "marks": $('#ApplicantMarks').val()
+            };
+            $.ajax({
+                url: "/Applicant/SaveMarks",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert("error");
+                },
+                success: function (response) {
+                    if (response == "ok") {
+                       
+                        var dialog = bootbox.dialog({
+                            message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>',
+                            closeButton: false
+                        });
+                        setTimeout(function () {
+                            window.location.replace("/Applicant/addMarks");
+
+                        }, 1000);
+                    }
+                    else {
+                        bootbox.dialog({
+                            message: '<p><i class="fa fa-spin fa-spinner"></i> Some Issue Occur...</p>',
+                            closeButton: false
+                        });
+                    }
+                }
+            });
+        }
+        var applicationID = 0;
+
+        $("#Allocate").click(function () {
+            SaveApplicantMarks(applicationID);
+            return det;
+        });
+
+        function LoadApplicantDetailsPage(id) {
+            applicationID = id;
+            $('#ApplicantDetails').show(1000);
+            //alert(fname);
+            $('#ApplicantName').text("Marks Details of ApplicantID:" + id);
+            
+        }
+
+        function LoadApplicantEditDetailsPage(id) {
+            alert(id);
+        }
+
+
+
+    </script>
+}
